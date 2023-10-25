@@ -13,9 +13,12 @@ const authOptions: AuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET as string,
     }),
   ],
+  pages: {
+    signIn: "/sign-in",
+  },
   secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as Post };
+export { handler as GET, handler as POST };
