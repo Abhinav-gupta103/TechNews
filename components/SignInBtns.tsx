@@ -24,7 +24,7 @@ const SignInBtns = () => {
         </button>
         <button
           onClick={() => {
-            signIn("github");
+            signIn("google");
           }}
           className="flex items-center border p-4 rounded-full gap-4 hover:bg-slate-100/25 transition"
         >
