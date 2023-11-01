@@ -31,14 +31,14 @@ const Post = async ({
 
   const isEditable = session && session?.user?.email === authorEmail;
 
-  const dateObject = new Date(date);
-  const options: Intl.DateTimeFormat = {
+  const dateObject = new Date();
+  const options: Intl.DateTimeFormatOptions = {
     month: "short",
     day: "numeric",
     year: "numeric",
   };
-
-  const formattedDate = dateObject.toLocaleDateString("en-US", options);
+  const formatter = new Intl.DateTimeFormat("en-US", options);
+  const formattedDate = formatter.format(dateObject);
 
   return (
     <div className="my-4 border-b border-b-300 py-8">
