@@ -23,6 +23,7 @@ const CategoriesList = async () => {
         categories.map((category) => (
           // eslint-disable-next-line react/jsx-key
           <Link
+            key={category.id}
             className="px-4 py-1 rounded-md bg-slate-800 text-white cursor-pointer"
             href={`/categories/${category.catName}`}
           >
