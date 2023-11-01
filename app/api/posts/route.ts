@@ -32,7 +32,6 @@ export async function POST(req: Request) {
         authorEmail,
       },
     });
-    console.log("Post Created");
     return NextResponse.json(newPost);
   } catch (error) {
     return NextResponse.json({ message: error }, { status: 500 });

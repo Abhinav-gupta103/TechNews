@@ -6,6 +6,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CldUploadButton, CldUploadWidgetResults } from "next-cloudinary";
+import toast from "react-hot-toast";
 
 const CreatePostForm = () => {
   const [links, setLinks] = useState<string[]>([]);
@@ -16,7 +17,6 @@ const CreatePostForm = () => {
   const [selectedCategory, setselectedCategory] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [publicId, setPublicId] = useState("");
-  const [error, setError] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -55,7 +55,10 @@ const CreatePostForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (title.trim() === "" || content.trim() === "") {
-      setError("Title and content are required");
+      const errorMessage = "Title and content are required";
+      console.log(errorMessage);
+
+      toast.error(errorMessage);
       return;
     }
     try {
@@ -74,7 +77,10 @@ const CreatePostForm = () => {
         }),
       });
       if (res.ok) {
+        toast.success("Post Created Successfully");
         router.push("/dashboard");
+      } else {
+        toast.error("Something Went Wrong");
       }
     } catch (error) {
       console.log(error);
@@ -236,7 +242,6 @@ const CreatePostForm = () => {
         <button className="primary-btn" type="submit">
           Create Post
         </button>
-        {error && <div className="p-2 text-red-500 font-bold">{error}</div>}
       </form>
     </div>
   );

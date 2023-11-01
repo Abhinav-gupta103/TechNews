@@ -6,6 +6,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CldUploadButton, CldUploadWidgetResults } from "next-cloudinary";
+import toast from "react-hot-toast";
 
 const EditPostForm = ({ post }: { post: TPost }) => {
   const [links, setLinks] = useState<string[]>([]);
@@ -16,14 +17,10 @@ const EditPostForm = ({ post }: { post: TPost }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [publicId, setPublicId] = useState("");
-  const [error, setError] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     const fetchAllCategories = async () => {
-      // env variables are not accesible here??
-      // console.log(process.env);
-
       const res = await fetch("/api/categories");
       const catNames = await res.json();
 
@@ -65,7 +62,7 @@ const EditPostForm = ({ post }: { post: TPost }) => {
     e.preventDefault();
 
     if (title.trim() === "" || content.trim() === "") {
-      setError("Title and content are required");
+      toast.error("Title and content are required");
       return;
     }
     try {
@@ -84,7 +81,10 @@ const EditPostForm = ({ post }: { post: TPost }) => {
         }),
       });
       if (res.ok) {
+        toast.success("Post successfully updated");
         router.push("/dashboard");
+      } else {
+        toast.error("Something went wrong");
       }
     } catch (error) {
       console.log(error);
@@ -109,7 +109,6 @@ const EditPostForm = ({ post }: { post: TPost }) => {
   };
 
   const handleImageUpload = (result: CldUploadWidgetResults) => {
-    console.log(result);
     const info = result.info as object;
     if ("secure_url" in info && "public_id" in info) {
       const url = info.secure_url as string;
@@ -258,7 +257,6 @@ const EditPostForm = ({ post }: { post: TPost }) => {
         <button className="primary-btn" type="submit">
           Update Post
         </button>
-        {error && <div className="p-2 text-red-500 font-bold">{error}</div>}
       </form>
     </div>
   );
