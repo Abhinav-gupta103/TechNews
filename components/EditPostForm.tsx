@@ -1,17 +1,17 @@
 "use client";
 
-import { TCategory } from "@/app/types";
+import { TCategory, TPost } from "@/app/types";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const CreatePostForm = () => {
+const EditPostForm = ({ post }: { post: TPost }) => {
   const [links, setLinks] = useState<string[]>([]);
   const [linkInput, setLinkInput] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [categories, setCategories] = useState<TCategory[]>([]);
-  const [selectedCategory, setselectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [publicId, setPublicId] = useState("");
   const [error, setError] = useState("");
@@ -19,14 +19,33 @@ const CreatePostForm = () => {
 
   useEffect(() => {
     const fetchAllCategories = async () => {
-      const res = await fetch("api/categories");
+      // env variables are not accesible here??
+      // console.log(process.env);
+
+      const res = await fetch("http://localhost:3000/api/categories");
       const catNames = await res.json();
-      console.log(catNames);
 
       setCategories(catNames);
     };
     fetchAllCategories();
-  }, []);
+
+    const initValues = () => {
+      setTitle(post.title);
+      setContent(post.content);
+      setImageUrl(post.imageUrl || "");
+      setPublicId(post.publicId || "");
+      setSelectedCategory(post.catName || "");
+      setLinks(post.links || []);
+    };
+    initValues();
+  }, [
+    post.title,
+    post.content,
+    post.imageUrl,
+    post.publicId,
+    post.catName,
+    post.links,
+  ]);
 
   const addLink = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -42,13 +61,14 @@ const CreatePostForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (title.trim() === "" || content.trim() === "") {
       setError("Title and content are required");
       return;
     }
     try {
-      const res = await fetch("api/posts/", {
-        method: "POST",
+      const res = await fetch(`http://localhost:3000/api/posts/${post.id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -71,16 +91,18 @@ const CreatePostForm = () => {
 
   return (
     <div>
-      <h2>Create Post</h2>
+      <h2>Edit Post</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <input
           onChange={(e) => setTitle(e.target.value)}
           type="text"
           placeholder="Title"
+          value={title}
         />
         <textarea
           onChange={(e) => setContent(e.target.value)}
           placeholder="Content"
+          value={content}
         ></textarea>
         {links &&
           links.map((link, i) => (
@@ -151,7 +173,8 @@ const CreatePostForm = () => {
           </button>
         </div>
         <select
-          onChange={(e) => setselectedCategory(e.target.value)}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          value={selectedCategory}
           className="p-3 rounded-md border appearance-none"
         >
           <option value="">Select A Category</option>
@@ -163,7 +186,7 @@ const CreatePostForm = () => {
             ))}
         </select>
         <button className="primary-btn" type="submit">
-          Create Post
+          Update Post
         </button>
         {error && <div className="p-2 text-red-500 font-bold">{error}</div>}
       </form>
@@ -171,4 +194,4 @@ const CreatePostForm = () => {
   );
 };
 
-export default CreatePostForm;
+export default EditPostForm;
