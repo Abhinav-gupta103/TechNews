@@ -83,6 +83,7 @@ const EditPostForm = ({ post }: { post: TPost }) => {
       if (res.ok) {
         toast.success("Post successfully updated");
         router.push("/dashboard");
+        router.refresh();
       } else {
         toast.error("Something went wrong");
       }
