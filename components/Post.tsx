@@ -3,6 +3,7 @@ import Link from "next/link";
 import DeleteButton from "./DeleteButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import LikeButton from "./LikeButton";
 
 interface PostProps {
   id: string;
@@ -58,6 +59,8 @@ const Post = async ({
             src={thumbnail}
             alt={title}
             fill
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, 1200px"
+            priority
             className="object-cover rounded-md object-center"
           />
         ) : (
@@ -65,6 +68,8 @@ const Post = async ({
             src={"/thumbnail-placeholder.png"}
             alt={title}
             fill
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, 1200px"
+            priority
             className="object-cover rounded-md object-center"
           />
         )}
@@ -107,6 +112,7 @@ const Post = async ({
       )}
       {isEditable && (
         <div className="flex gap-3 font-bold py-2 px-4 rounded-md bg-slate-200 w-fit">
+          <LikeButton id={id} />
           <Link href={`/edit-post/${id}`}>Edit</Link>
           <DeleteButton id={id} />
         </div>
