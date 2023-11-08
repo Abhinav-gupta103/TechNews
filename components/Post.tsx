@@ -110,11 +110,15 @@ const Post = async ({
           ))}
         </div>
       )}
-      {isEditable && (
+      {isEditable ? (
         <div className="flex gap-3 font-bold py-2 px-4 rounded-md bg-slate-200 w-fit">
           <LikeButton id={id} />
           <Link href={`/edit-post/${id}`}>Edit</Link>
           <DeleteButton id={id} />
+        </div>
+      ) : (
+        <div className="flex gap-3 font-bold py-2 px-4 rounded-md bg-slate-200 w-fit">
+          <LikeButton id={id} />
         </div>
       )}
     </div>
