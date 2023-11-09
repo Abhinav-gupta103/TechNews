@@ -11,7 +11,10 @@ export async function GET(
   try {
     const post = await prisma.post.findUnique({
       where: { id },
-      include: { author: { select: { name: true } } },
+      include: {
+        author: { select: { name: true } },
+        likesBy: { select: { userEmail: true, createdAt: true } },
+      },
     });
     if (!post) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
