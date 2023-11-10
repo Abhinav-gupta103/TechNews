@@ -1,11 +1,10 @@
-import { NextApiRequest } from "next";
 import prisma from "@/lib/prismadb";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
 
 export async function GET(
-  req: NextApiRequest,
+  req: Request,
   { params }: { params: { id: string } }
 ) {
   const postId = params.id;
@@ -40,7 +39,7 @@ export async function GET(
 }
 
 export async function POST(
-  req: NextApiRequest,
+  req: Request,
   { params }: { params: { id: string } }
 ) {
   const postId = params.id;
