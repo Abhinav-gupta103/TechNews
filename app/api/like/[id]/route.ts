@@ -3,7 +3,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
 
-export async function GET({ params }: { params: { id: string } }) {
+export async function GET(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   const postId = params.id;
 
   const session = await getServerSession(authOptions);
@@ -35,7 +38,10 @@ export async function GET({ params }: { params: { id: string } }) {
   }
 }
 
-export async function POST({ params }: { params: { id: string } }) {
+export async function POST(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   const postId = params.id;
 
   const session = await getServerSession(authOptions);
