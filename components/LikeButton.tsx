@@ -45,7 +45,7 @@ const LikeButton: React.FC<{ id: string }> = ({ id }) => {
       className={`${like ? "text-blue-500 " : "text-red-500 "}`}
       onClick={handleLike}
     >
-      Like
+      {like ? "Liked" : "Like"}
     </button>
   );
 };
