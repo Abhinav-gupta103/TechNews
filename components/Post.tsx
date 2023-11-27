@@ -31,7 +31,7 @@ const Post = async ({
   const session = await getServerSession(authOptions);
 
   const isEditable = session && session?.user?.email === authorEmail;
-
+  const isUser = session && session?.user?.email !== authorEmail;
   const dateObject = new Date();
   const options: Intl.DateTimeFormatOptions = {
     month: "short",
@@ -110,13 +110,14 @@ const Post = async ({
           ))}
         </div>
       )}
-      {isEditable ? (
+      {isEditable && (
         <div className="flex gap-3 font-bold py-2 px-4 rounded-md bg-slate-200 w-fit">
           <LikeButton id={id} />
           <Link href={`/edit-post/${id}`}>Edit</Link>
           <DeleteButton id={id} />
         </div>
-      ) : (
+      )}
+      {isUser && (
         <div className="flex gap-3 font-bold py-2 px-4 rounded-md bg-slate-200 w-fit">
           <LikeButton id={id} />
         </div>
