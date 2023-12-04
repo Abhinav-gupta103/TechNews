@@ -26,4 +26,6 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ![image](https://github.com/Abhinav-gupta103/TechNews/assets/101502988/a88e6663-a0f0-4fdb-9fc9-0e617371bb16)
 ![image](https://github.com/Abhinav-gupta103/TechNews/assets/101502988/1e4f59c4-8651-4699-a2c9-1ab915e32760)
 ![image](https://github.com/Abhinav-gupta103/TechNews/assets/101502988/7a881f56-7269-4419-8011-6c92e5e7bf1a)
+![image](https://github.com/Abhinav-gupta103/TechNews/assets/101502988/b00e18fa-e13d-4632-99a8-059c3fbde7a2)
+
 
